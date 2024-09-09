@@ -1,9 +1,11 @@
-﻿using BazresiApi.Models;
+﻿using BazresiApi.Customized;
+using BazresiApi.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BazresiApi.Context
 {
-    public class BazresiDb : DbContext
+    public class BazresiDb : IdentityDbContext<CustomUser>
     {
         public BazresiDb(DbContextOptions options) : base(options)
         {

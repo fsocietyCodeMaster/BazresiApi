@@ -2,6 +2,7 @@
 using BazresiApi.DTO;
 using BazresiApi.Models;
 using BazresiApi.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 

@@ -29,6 +29,7 @@ namespace BazresiApi.Extention
             services.AddScoped<IRaveshItemBazresi, RaveshItemBazresiService>();
             services.AddScoped<ISharhMoshkelatBazresi, SharhMoshkelatBazresiService>();
             services.AddScoped<ISoalatCheckList, SoalatCheckListService>();
+            services.AddScoped<IUser, UserService>();
 
             return services;
         }

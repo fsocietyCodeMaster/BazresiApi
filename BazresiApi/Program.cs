@@ -1,9 +1,14 @@
 using BazresiApi.Context;
+using BazresiApi.Customized;
 using BazresiApi.Extention;
 using BazresiApi.Repository;
 using BazresiApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +36,32 @@ builder.Services.AddDbContext<BazresiDb>(option =>
     option.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 });
 
+builder.Services.AddIdentity<CustomUser, IdentityRole>(c =>
+{
+    c.User.RequireUniqueEmail = true;
+
+
+}).AddEntityFrameworkStores<BazresiDb>();
+
+
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+}).AddJwtBearer(option =>
+{
+    option.TokenValidationParameters = new()
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateAudience = true,
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+    };
+});
 
 // using extention for services
 
