@@ -1,0 +1,6 @@
+@BazresiApi_HostAddress = http://localhost:5208
+
+GET {{BazresiApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
