@@ -12,10 +12,10 @@ namespace BazresiApi.Controllers
     public class EghdamEslahiController : ControllerBase
     {
 
-        private readonly IEghdamEslahi _eghdamEslahi;
+        private readonly IGenericRepository<T_Eghdam_Eslahi> _eghdamEslahi;
         private readonly IMapper _mapper;
         private readonly ILogger<EghdamEslahiController> _logger;
-        public EghdamEslahiController( IEghdamEslahi eghdamEslahi, IMapper mapper, ILogger<EghdamEslahiController> logger)
+        public EghdamEslahiController(IGenericRepository<T_Eghdam_Eslahi> eghdamEslahi, IMapper mapper, ILogger<EghdamEslahiController> logger)
         {
             _logger = logger;
             _eghdamEslahi = eghdamEslahi;

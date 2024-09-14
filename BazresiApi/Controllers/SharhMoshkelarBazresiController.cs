@@ -12,10 +12,10 @@ namespace BazresiApi.Controllers
     {
 
 
-        private readonly ISharhMoshkelatBazresi _sharhMoshkelatBazresi;
+        private readonly IGenericRepository<T_Sharh_Moshkelat_Bazresi> _sharhMoshkelatBazresi;
         private readonly IMapper _mapper;
         private readonly ILogger<SharhMoshkelarBazresiController> _logger;
-        public SharhMoshkelarBazresiController(ISharhMoshkelatBazresi sharhMoshkelatBazresi, IMapper mapper, ILogger<SharhMoshkelarBazresiController> logger)
+        public SharhMoshkelarBazresiController(IGenericRepository<T_Sharh_Moshkelat_Bazresi> sharhMoshkelatBazresi, IMapper mapper, ILogger<SharhMoshkelarBazresiController> logger)
         {
             _logger = logger;
             _sharhMoshkelatBazresi = sharhMoshkelatBazresi;

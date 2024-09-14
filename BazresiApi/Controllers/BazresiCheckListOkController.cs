@@ -11,10 +11,10 @@ namespace BazresiApi.Controllers
     public class BazresiCheckListOkController : ControllerBase
     {
 
-        private readonly IBazresiCheckListOk _bazresiCheckListOk;
+        private readonly IGenericRepository<T_Bazresi_CheckList_OK> _bazresiCheckListOk;
         private readonly IMapper _mapper;
         private readonly ILogger<BazresiCheckListOkController> _logger;
-        public BazresiCheckListOkController(IBazresiCheckListOk bazresiCheckListOk, IMapper mapper, ILogger<BazresiCheckListOkController> logger)
+        public BazresiCheckListOkController(IGenericRepository<T_Bazresi_CheckList_OK> bazresiCheckListOk, IMapper mapper, ILogger<BazresiCheckListOkController> logger)
         {
             _logger = logger;
             _bazresiCheckListOk = bazresiCheckListOk;

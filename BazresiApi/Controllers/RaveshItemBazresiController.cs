@@ -11,11 +11,11 @@ namespace BazresiApi.Controllers
     public class RaveshItemBazresiController : ControllerBase
     {
 
-        private readonly IRaveshItemBazresi _raveshItemBazresi;
+        private readonly IGenericRepository<T_Ravesh_Item_Bazresi> _raveshItemBazresi;
         private readonly IMapper _mapper;
         private readonly ILogger<RaveshItemBazresiController> _logger;
 
-        public RaveshItemBazresiController(IRaveshItemBazresi raveshItem, IMapper mapper, ILogger<RaveshItemBazresiController> logger)
+        public RaveshItemBazresiController(IGenericRepository<T_Ravesh_Item_Bazresi> raveshItem, IMapper mapper, ILogger<RaveshItemBazresiController> logger)
         {
 
             _raveshItemBazresi = raveshItem;

@@ -12,10 +12,10 @@ namespace BazresiApi.Controllers
     {
 
 
-        private readonly ISoalatCheckList _soalatCheckList;
+        private readonly IGenericRepository<T_Soalat_CheckList> _soalatCheckList;
         private readonly IMapper _mapper;
         private readonly ILogger<SoalatCheckListController> _logger;
-        public SoalatCheckListController(ISoalatCheckList soalatCheckList, IMapper mapper, ILogger<SoalatCheckListController> logger)
+        public SoalatCheckListController(IGenericRepository<T_Soalat_CheckList> soalatCheckList, IMapper mapper, ILogger<SoalatCheckListController> logger)
         {
             _logger = logger;
             _soalatCheckList = soalatCheckList;

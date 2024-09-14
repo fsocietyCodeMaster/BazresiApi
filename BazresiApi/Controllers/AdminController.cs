@@ -12,10 +12,10 @@ namespace BazresiApi.Controllers
     public class AdminController : ControllerBase
     {
 
-        private readonly IAdmin _admin;
+        private readonly IGenericRepository<T_AdminApp> _admin;
         private readonly IMapper _mapper;
         private readonly ILogger<AdminController> _logger;
-        public AdminController(IAdmin admin, IMapper mapper, ILogger<AdminController> logger)
+        public AdminController(IGenericRepository<T_AdminApp> admin, IMapper mapper, ILogger<AdminController> logger)
         {
             _logger = logger;
             _admin = admin;

@@ -11,11 +11,11 @@ namespace BazresiApi.Controllers
     [ApiController]
     public class ClassItemController : ControllerBase
     {
-        private readonly IClassItem _classItem;
+        private readonly IGenericRepository<T_L_Class_Item> _classItem;
         private readonly IMapper _mapper;
         private readonly ILogger<ClassItemController> _logger;
 
-        public ClassItemController(BazresiDb context, IClassItem classItem, IMapper mapper, ILogger<ClassItemController> logger)
+        public ClassItemController(IGenericRepository<T_L_Class_Item> classItem, IMapper mapper, ILogger<ClassItemController> logger)
         {
             _logger = logger;
             _classItem = classItem;

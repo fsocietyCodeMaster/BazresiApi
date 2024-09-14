@@ -12,11 +12,11 @@ namespace BazresiApi.Controllers
     {
 
 
-        private readonly ISabegheKar _sabegheKar;
+        private readonly IGenericRepository<T_L_SabegheKar> _sabegheKar;
         private readonly IMapper _mapper;
         private readonly ILogger<SabegheKarController> _logger;
 
-        public SabegheKarController(ISabegheKar sabegheKar, IMapper mapper, ILogger<SabegheKarController> logger)
+        public SabegheKarController(IGenericRepository<T_L_SabegheKar> sabegheKar, IMapper mapper, ILogger<SabegheKarController> logger)
         {
 
             _sabegheKar = sabegheKar;

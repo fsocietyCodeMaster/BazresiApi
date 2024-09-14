@@ -12,10 +12,10 @@ namespace BazresiApi.Controllers
     {
 
 
-        private readonly IZirClassItem _zirClassItem;
+        private readonly IGenericRepository<T_L_Zir_Class_Item> _zirClassItem;
         private readonly IMapper _mapper;
         private readonly ILogger<ZirClassItemController> _logger;
-        public ZirClassItemController(IZirClassItem zirClassItem, IMapper mapper, ILogger<ZirClassItemController> logger)
+        public ZirClassItemController(IGenericRepository<T_L_Zir_Class_Item> zirClassItem, IMapper mapper, ILogger<ZirClassItemController> logger)
         {
             _logger = logger;
             _zirClassItem = zirClassItem;

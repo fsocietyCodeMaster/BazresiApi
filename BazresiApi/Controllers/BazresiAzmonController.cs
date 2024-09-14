@@ -11,11 +11,11 @@ namespace BazresiApi.Controllers
     public class BazresiAzmonController : ControllerBase
     {
 
-        private readonly IBazresAzmon _bazresAzmon;
+        private readonly IGenericRepository<T_Bazresi_Azmon> _bazresAzmon;
         private readonly IMapper _mapper;
         private readonly ILogger<BazresiAzmonController> _logger;
 
-        public BazresiAzmonController(IBazresAzmon bazresAzmon, IMapper mapper, ILogger<BazresiAzmonController> logger)
+        public BazresiAzmonController(IGenericRepository<T_Bazresi_Azmon> bazresAzmon, IMapper mapper, ILogger<BazresiAzmonController> logger)
         {
             _logger = logger;
             _bazresAzmon = bazresAzmon;

@@ -14,10 +14,10 @@ namespace BazresiApi.Controllers
     {
 
 
-        private readonly ICheckList _checkList;
+        private readonly IGenericRepository<T_CheckList> _checkList;
         private readonly IMapper _mapper;
         private readonly ILogger<CheckListController> _logger;
-        public CheckListController(ICheckList checkList, IMapper mapper, ILogger<CheckListController> logger)
+        public CheckListController(IGenericRepository<T_CheckList> checkList, IMapper mapper, ILogger<CheckListController> logger)
         {
             _logger = logger;
             _checkList = checkList;

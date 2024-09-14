@@ -12,11 +12,11 @@ namespace BazresiApi.Controllers
     {
 
 
-        private readonly IFerekansItemBazresi _ferekansItem;
+        private readonly IGenericRepository<T_Ferekans_Item_Bazresi> _ferekansItem;
         private readonly IMapper _mapper;
         private readonly ILogger<FerekansItemBazresiController> _logger;
 
-        public FerekansItemBazresiController(IFerekansItemBazresi ferekansItemBazresi, IMapper mapper, ILogger<FerekansItemBazresiController> logger)
+        public FerekansItemBazresiController(IGenericRepository<T_Ferekans_Item_Bazresi> ferekansItemBazresi, IMapper mapper, ILogger<FerekansItemBazresiController> logger)
         {
             _logger = logger;
             _ferekansItem = ferekansItemBazresi;

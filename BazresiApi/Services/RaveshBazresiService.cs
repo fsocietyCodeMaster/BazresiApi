@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BazresiApi.Services
 {
-    public class RaveshBazresiService : IRaveshBazresi
+    public class RaveshBazresiService : IGenericRepository<T_L_Ravesh_Bazresi>
     {
         private readonly BazresiDb _context;
 
@@ -23,7 +23,7 @@ namespace BazresiApi.Services
 
 
 
-        public async Task<IEnumerable<T_L_Ravesh_Bazresi>> GetAsync(int id)
+        public async Task<IEnumerable<T_L_Ravesh_Bazresi>> GetAsync(long id)
         {
             return await _context.RaveshBazresi.Where(u => u.T_AdminsBackups_ID == id).ToListAsync();
         }

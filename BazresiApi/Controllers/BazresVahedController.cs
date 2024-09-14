@@ -13,10 +13,10 @@ namespace BazresiApi.Controllers
 
 
 
-        private readonly IBazresVahed _bazresVahed;
+        private readonly IGenericRepository<T_Bazres_Vahed> _bazresVahed;
         private readonly IMapper _mapper;
         private readonly ILogger<BazresVahedController> _logger;
-        public BazresVahedController(IBazresVahed bazresVahed, IMapper mapper, ILogger<BazresVahedController> logger)
+        public BazresVahedController(IGenericRepository<T_Bazres_Vahed> bazresVahed, IMapper mapper, ILogger<BazresVahedController> logger)
         {
             _logger = logger;
             _bazresVahed = bazresVahed;

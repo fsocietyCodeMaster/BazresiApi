@@ -11,10 +11,10 @@ namespace BazresiApi.Controllers
     public class BazreController : ControllerBase
     {
 
-        private readonly IBazres _bazres;
+        private readonly IGenericRepository<T_Bazres> _bazres;
         private readonly IMapper _mapper;
         private readonly ILogger<BazreController> _logger;
-        public BazreController(IBazres bazres, IMapper mapper, ILogger<BazreController> logger)
+        public BazreController(IGenericRepository<T_Bazres> bazres, IMapper mapper, ILogger<BazreController> logger)
         {
             _logger = logger;
             _bazres = bazres;

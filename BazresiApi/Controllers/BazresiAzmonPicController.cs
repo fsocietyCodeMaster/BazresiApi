@@ -10,11 +10,11 @@ namespace BazresiApi.Controllers
     public class BazresiAzmonPicController : ControllerBase
     {
 
-        private readonly IBazresAzmonPic _bazresAzmonPic;
+        private readonly IGenericRepository<T_Bazresi_Azmon_Pic> _bazresAzmonPic;
         private readonly IMapper _mapper;
         private readonly ILogger<BazresiAzmonPicController> _logger;
 
-        public BazresiAzmonPicController(IBazresAzmonPic bazresAzmonPic, IMapper mapper, ILogger<BazresiAzmonPicController> logger)
+        public BazresiAzmonPicController(IGenericRepository<T_Bazresi_Azmon_Pic> bazresAzmonPic, IMapper mapper, ILogger<BazresiAzmonPicController> logger)
         {
             _logger = logger;
             _bazresAzmonPic = bazresAzmonPic;

@@ -11,10 +11,10 @@ namespace BazresiApi.Controllers
     public class VaziatEjraController : ControllerBase
     {
 
-        private readonly IVaziat _vaziat;
+        private readonly IGenericRepository<T_L_Vaziat_Ejra> _vaziat;
         private readonly IMapper _mapper;
         private readonly ILogger<VaziatEjraController> _logger;
-        public VaziatEjraController(IVaziat vaziat, IMapper mapper, ILogger<VaziatEjraController> logger)
+        public VaziatEjraController(IGenericRepository<T_L_Vaziat_Ejra> vaziat, IMapper mapper, ILogger<VaziatEjraController> logger)
         {
             _logger = logger;
             _vaziat = vaziat;

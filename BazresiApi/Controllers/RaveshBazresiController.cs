@@ -12,11 +12,11 @@ namespace BazresiApi.Controllers
     public class RaveshBazresiController : ControllerBase
     {
 
-        private readonly IRaveshBazresi _raveshBazresi;
+        private readonly IGenericRepository<T_L_Ravesh_Bazresi> _raveshBazresi;
         private readonly IMapper _mapper;
         private readonly ILogger<RaveshBazresiController> _logger;
 
-        public RaveshBazresiController(IRaveshBazresi raveshBazresi, IMapper mapper, ILogger<RaveshBazresiController> logger)
+        public RaveshBazresiController(IGenericRepository<T_L_Ravesh_Bazresi> raveshBazresi, IMapper mapper, ILogger<RaveshBazresiController> logger)
         {
             _logger = logger;
             _raveshBazresi = raveshBazresi;

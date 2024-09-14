@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BazresiApi.Services
 {
-    public class SoalatCheckListService : ISoalatCheckList
+    public class SoalatCheckListService : IGenericRepository<T_Soalat_CheckList>
     {
         private readonly BazresiDb _context;
 
@@ -22,7 +22,7 @@ namespace BazresiApi.Services
 
 
 
-        public async Task<IEnumerable<T_Soalat_CheckList>> GetAsync(int id)
+        public async Task<IEnumerable<T_Soalat_CheckList>> GetAsync(long id)
         {
             return await _context.SoalatCheckList.Where(u => u.T_AdminsBackups_ID == id).ToListAsync();
         }

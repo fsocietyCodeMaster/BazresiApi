@@ -11,11 +11,11 @@ namespace BazresiApi.Controllers
     public class VahedController : ControllerBase
     {
 
-        private readonly IVahed _vahed;
+        private readonly IGenericRepository<T_L_Vahed> _vahed;
         private readonly IMapper _mapper;
         private readonly ILogger<VahedController> _logger;
 
-        public VahedController(IVahed vahed, IMapper mapper, ILogger<VahedController> logger)
+        public VahedController(IGenericRepository<T_L_Vahed> vahed, IMapper mapper, ILogger<VahedController> logger)
         {
 
             _vahed = vahed;
