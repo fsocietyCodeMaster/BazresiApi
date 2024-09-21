@@ -1,30 +1,80 @@
-﻿using BazresiApi.Context;
+﻿using AutoMapper;
+using BazresiApi.Context;
+using BazresiApi.DTO;
 using BazresiApi.Models;
 using BazresiApi.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace BazresiApi.Services
 {
-    public class EghdamEslahiService : IGenericRepository<T_Eghdam_Eslahi>
+    public class EghdamEslahiService : IGenericRepository<EghdamEslahiDto>
     {
         private readonly BazresiDb _context;
-
-        public EghdamEslahiService(BazresiDb context)
+        private readonly IMapper _mapper;
+        public EghdamEslahiService(BazresiDb context, IMapper mapper)
         {
             _context = context;
-        }
-        public void add(T_Eghdam_Eslahi eghdamEslahi)
-        {
-            _context.EghdamEslahi.Add(eghdamEslahi);
-            
-
+            _mapper = mapper;
         }
 
-
-
-        public async Task<IEnumerable<T_Eghdam_Eslahi>> GetAsync(long id)
+        public async Task<ResponseDto> AddAsync(EghdamEslahiDto eghdamEslahi)
         {
-            return await _context.EghdamEslahi.Where(u => u.T_AdminsBackups_ID == id).ToListAsync();
+            if (eghdamEslahi == null)
+            {
+                var error = new ResponseDto
+                {
+                    Message = "Something is wrong.",
+                    IsSuccess = false,
+                    Status = HttpStatusCode.BadRequest.ToString(),
+                };
+                return error;
+            }
+            else
+            {
+                var adminMapped = _mapper.Map<T_Eghdam_Eslahi>(eghdamEslahi);
+                _context.Add(adminMapped);
+                await _context.SaveChangesAsync();
+
+                var success = new ResponseDto
+                {
+                    Message = "successfully added.",
+                    IsSuccess = true,
+                    Status = HttpStatusCode.OK.ToString(),
+                };
+                return success;
+            }
+
+
+        }
+
+
+
+        public async Task<ResponseDto> GetAsync(long id)
+        {
+            var eghdamEslahi = await _context.EghdamEslahi.Where(c => c.T_AdminsBackups_ID == id).ToListAsync();
+            if (eghdamEslahi.Any())
+            {
+
+                var success = new ResponseDto
+                {
+                    Message = "Books successfully retrieved .",
+                    IsSuccess = true,
+                    Status = HttpStatusCode.OK.ToString(),
+                    Data = new { response = _mapper.Map<IEnumerable<EghdamEslahiDto>>(eghdamEslahi) }
+                };
+                return success;
+            }
+            else
+            {
+                var error = new ResponseDto
+                {
+                    Message = "Nothing found.",
+                    IsSuccess = false,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                };
+                return error;
+            }
         }
 
         public async Task SaveAsync()

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BazresiApi.DTO
 {
-    public class BazreDto
+    public class BazresiDto
     {
 
 

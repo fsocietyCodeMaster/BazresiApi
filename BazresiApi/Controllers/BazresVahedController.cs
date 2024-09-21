@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using BazresiApi.DTO;
-using BazresiApi.Models;
+﻿using BazresiApi.DTO;
 using BazresiApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,63 +11,51 @@ namespace BazresiApi.Controllers
 
 
 
-        private readonly IGenericRepository<T_Bazres_Vahed> _bazresVahed;
-        private readonly IMapper _mapper;
+        private readonly IGenericRepository<BazresiVahedDto> _bazresVahed;
         private readonly ILogger<BazresVahedController> _logger;
-        public BazresVahedController(IGenericRepository<T_Bazres_Vahed> bazresVahed, IMapper mapper, ILogger<BazresVahedController> logger)
+        public BazresVahedController(IGenericRepository<BazresiVahedDto> bazresVahed, ILogger<BazresVahedController> logger)
         {
             _logger = logger;
             _bazresVahed = bazresVahed;
-            _mapper = mapper;
         }
-
 
         #region Get
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ResponseDto>>> Get(int id)
+        public async Task<ActionResult<ResponseDto>> Get(int id)
         {
             try
             {
-                var BazresiVahed = await _bazresVahed.GetAsync(id);
 
-                if (BazresiVahed == null || !BazresiVahed.Any())
+
+                var result = await _bazresVahed.GetAsync(id);
+                if (result.IsSuccess == true)
                 {
-                    var error = new NotFoundDto
-                    {
-                        Status = 404,
-                        Message = "Nothing found.",
-                        IsSuccess= false,
-                        Data = new BazresiVahedDto { }
-
-                    };
-                    return NotFound(error);
+                    return Ok(result);
                 }
-
-                var success = new ResponseDto
+                else
                 {
-                    Status = 200,
-                    Message = "successfully retrieved .",
-                    IsSuccess = true,
-                    Data = new { Response = _mapper.Map<IEnumerable<BazresiVahedDto>>(BazresiVahed) }
-                };
-
-                return Ok(success);
+                    return BadRequest(result);
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "an error occurred .");
 
-                var error = new ErrorDto
+                _logger.LogError(ex, "an error occurred.");
+
+                var error = new ResponseDto
                 {
                     Message = "Error.",
-                    Success = false,
+                    IsSuccess = false,
+                    Status = StatusCodes.Status404NotFound.ToString()
                 };
 
                 return BadRequest(error);
             }
+
         }
         #endregion
+
 
 
 
@@ -78,36 +64,39 @@ namespace BazresiApi.Controllers
 
         [HttpPost]
 
-        public async Task<ActionResult> Create(BazresiVahedDto bazresiVahed)
+        public async Task<ActionResult<ResponseDto>> Create(BazresiVahedDto bazresiVahed)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var BazresiVahed = _mapper.Map<T_Bazres_Vahed>(bazresiVahed);
-
-                _bazresVahed.add(BazresiVahed);
-                await _bazresVahed.SaveAsync();
-
-
-                var success = new ResponsePostDto
+                try
                 {
-                    Message = "successfully added.",
-                    IsSuccess = true
-                };
-
-                return Ok(success);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "an error occurred .");
-
-                var error = new ErrorDto
+                    var result = await _bazresVahed.AddAsync(bazresiVahed);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return BadRequest(result);
+                    }
+                }
+                catch (Exception ex)
                 {
-                    Message = "Error.",
-                    Success = false,
-                };
+                    _logger.LogError(ex, "an error occurred.");
 
-                return BadRequest(error);
+                    var error = new ResponseDto
+                    {
+                        Message = "Error.",
+                        IsSuccess = false,
+                        Status = StatusCodes.Status404NotFound.ToString()
+                    };
+
+                    return BadRequest(error);
+                }
+
             }
+
+            return BadRequest("Some parameters not valid.");
         }
         #endregion
     }

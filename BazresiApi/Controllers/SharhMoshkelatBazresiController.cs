@@ -6,17 +6,18 @@ namespace BazresiApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FerekansBazresiController : ControllerBase
+    public class SharhMoshkelatBazresiController : ControllerBase
     {
 
-        private readonly IGenericRepository<FerekansBazresiDto> _ferekansBazresi;
-        private readonly ILogger<FerekansBazresiController> _logger;
 
-        public FerekansBazresiController(IGenericRepository<FerekansBazresiDto> ferekansBazresi, ILogger<FerekansBazresiController> logger)
+        private readonly IGenericRepository<SharhMoshkelatBazresiDto> _sharhMoshkelatBazresi;
+        private readonly ILogger<SharhMoshkelatBazresiController> _logger;
+        public SharhMoshkelatBazresiController(IGenericRepository<SharhMoshkelatBazresiDto> sharhMoshkelatBazresi, ILogger<SharhMoshkelatBazresiController> logger)
         {
             _logger = logger;
-            _ferekansBazresi = ferekansBazresi;
+            _sharhMoshkelatBazresi = sharhMoshkelatBazresi;
         }
+
 
         #region Get
 
@@ -27,7 +28,7 @@ namespace BazresiApi.Controllers
             {
 
 
-                var result = await _ferekansBazresi.GetAsync(id);
+                var result = await _sharhMoshkelatBazresi.GetAsync(id);
                 if (result.IsSuccess == true)
                 {
                     return Ok(result);
@@ -63,13 +64,13 @@ namespace BazresiApi.Controllers
 
         [HttpPost]
 
-        public async Task<ActionResult<ResponseDto>> Create(FerekansBazresiDto ferekansBazresi)
+        public async Task<ActionResult<ResponseDto>> Create(SharhMoshkelatBazresiDto sharhMoshkelatBazresi)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var result = await _ferekansBazresi.AddAsync(ferekansBazresi);
+                    var result = await _sharhMoshkelatBazresi.AddAsync(sharhMoshkelatBazresi);
                     if (result.IsSuccess == true)
                     {
                         return Ok(result);

@@ -4,19 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BazresiApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[Controller]")]
     [ApiController]
-    public class FerekansBazresiController : ControllerBase
+    public class BazresiController : ControllerBase
     {
 
-        private readonly IGenericRepository<FerekansBazresiDto> _ferekansBazresi;
-        private readonly ILogger<FerekansBazresiController> _logger;
-
-        public FerekansBazresiController(IGenericRepository<FerekansBazresiDto> ferekansBazresi, ILogger<FerekansBazresiController> logger)
+        private readonly IGenericRepository<BazresiDto> _bazres;
+        private readonly ILogger<BazresiController> _logger;
+        public BazresiController(IGenericRepository<BazresiDto> bazres, ILogger<BazresiController> logger)
         {
             _logger = logger;
-            _ferekansBazresi = ferekansBazresi;
+            _bazres = bazres;
         }
+
 
         #region Get
 
@@ -27,7 +27,7 @@ namespace BazresiApi.Controllers
             {
 
 
-                var result = await _ferekansBazresi.GetAsync(id);
+                var result = await _bazres.GetAsync(id);
                 if (result.IsSuccess == true)
                 {
                     return Ok(result);
@@ -63,13 +63,13 @@ namespace BazresiApi.Controllers
 
         [HttpPost]
 
-        public async Task<ActionResult<ResponseDto>> Create(FerekansBazresiDto ferekansBazresi)
+        public async Task<ActionResult<ResponseDto>> Create(BazresiDto bazresi)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var result = await _ferekansBazresi.AddAsync(ferekansBazresi);
+                    var result = await _bazres.AddAsync(bazresi);
                     if (result.IsSuccess == true)
                     {
                         return Ok(result);

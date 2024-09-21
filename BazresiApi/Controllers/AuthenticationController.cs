@@ -1,6 +1,5 @@
 ﻿using BazresiApi.DTO;
 using BazresiApi.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BazresiApi.Controllers
@@ -43,10 +42,10 @@ namespace BazresiApi.Controllers
             {
                 _logger.LogError(ex, "an error occurred.");
 
-                var error = new ErrorDto
+                var error = new ResponseDto
                 {
                     Message = "Error.",
-                    Success = false,
+                    IsSuccess = false,
                 };
 
                 return BadRequest(error);
@@ -79,10 +78,10 @@ namespace BazresiApi.Controllers
                 {
                     _logger.LogError(ex, "an error occurred.");
 
-                    var error = new ErrorDto
+                    var error = new ResponseDto
                     {
                         Message = "Error.",
-                        Success = false,
+                        IsSuccess = false,
                     };
 
                     return BadRequest(error);

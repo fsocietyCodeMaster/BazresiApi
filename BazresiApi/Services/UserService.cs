@@ -13,14 +13,12 @@ namespace BazresiApi.Services
 {
     public class UserService : IUser
     {
-        private readonly BazresiDb _db;
         private readonly UserManager<CustomUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
 
-        public UserService(BazresiDb db, UserManager<CustomUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public UserService(UserManager<CustomUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
-            _db = db;
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;

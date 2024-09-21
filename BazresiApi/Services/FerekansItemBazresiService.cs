@@ -1,31 +1,80 @@
-﻿using BazresiApi.Context;
+﻿using AutoMapper;
+using BazresiApi.Context;
+using BazresiApi.DTO;
 using BazresiApi.Models;
 using BazresiApi.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace BazresiApi.Services
 {
-    public class FerekansItemBazresiService : IGenericRepository<T_Ferekans_Item_Bazresi>
+    public class FerekansItemBazresiService : IGenericRepository<FerekansItemBazresiDto>
     {
         private readonly BazresiDb _context;
-
-        public FerekansItemBazresiService(BazresiDb context)
+        private readonly IMapper _mapper;
+        public FerekansItemBazresiService(BazresiDb context, IMapper mapper)
         {
             _context = context;
-        }
-        public void add(T_Ferekans_Item_Bazresi ferekansItemBazresi)
-        {
-            _context.FerekansItem.Add(ferekansItemBazresi);
-            
-
+            _mapper = mapper;
         }
 
-
-  
-
-        public async Task<IEnumerable<T_Ferekans_Item_Bazresi>> GetAsync(long id)
+        public async Task<ResponseDto> AddAsync(FerekansItemBazresiDto ferekansItemBazresi)
         {
-            return await _context.FerekansItem.Where(u => u.T_AdminsBackups_ID == id).ToListAsync();
+            if (ferekansItemBazresi == null)
+            {
+                var error = new ResponseDto
+                {
+                    Message = "Something is wrong.",
+                    IsSuccess = false,
+                    Status = HttpStatusCode.BadRequest.ToString(),
+                };
+                return error;
+            }
+            else
+            {
+                var adminMapped = _mapper.Map<T_Ferekans_Item_Bazresi>(ferekansItemBazresi);
+                _context.Add(adminMapped);
+                await _context.SaveChangesAsync();
+
+                var success = new ResponseDto
+                {
+                    Message = "successfully added.",
+                    IsSuccess = true,
+                    Status = HttpStatusCode.OK.ToString(),
+                };
+                return success;
+            }
+
+
+        }
+
+
+
+        public async Task<ResponseDto> GetAsync(long id)
+        {
+            var ferekansItemBazresi = await _context.FerekansItem.Where(c => c.T_AdminsBackups_ID == id).ToListAsync();
+            if (ferekansItemBazresi.Any())
+            {
+
+                var success = new ResponseDto
+                {
+                    Message = "Books successfully retrieved .",
+                    IsSuccess = true,
+                    Status = HttpStatusCode.OK.ToString(),
+                    Data = new { response = _mapper.Map<IEnumerable<FerekansItemBazresiDto>>(ferekansItemBazresi) }
+                };
+                return success;
+            }
+            else
+            {
+                var error = new ResponseDto
+                {
+                    Message = "Nothing found.",
+                    IsSuccess = false,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                };
+                return error;
+            }
         }
 
         public async Task SaveAsync()

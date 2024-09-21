@@ -8,8 +8,8 @@ namespace BazresiApi.AutoMapper
     {
         public BazresMapper()
         {
-            CreateMap<T_Bazres,BazreDto>();
-            CreateMap<BazreDto, T_Bazres>();
+            CreateMap<T_Bazres,BazresiDto>();
+            CreateMap<BazresiDto, T_Bazres>();
         }
     }
 }

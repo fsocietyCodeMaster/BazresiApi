@@ -8,20 +8,18 @@ using System.Net;
 
 namespace BazresiApi.Services
 {
-    public class BazresAzmonService : IGenericRepository<BazresiAzmonDto>
+    public class BazresiService : IGenericRepository<BazresiDto>
     {
         private readonly BazresiDb _context;
         private readonly IMapper _mapper;
-        public BazresAzmonService(BazresiDb context, IMapper mapper)
+        public BazresiService(BazresiDb context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
-
-
-        public async Task<ResponseDto> AddAsync(BazresiAzmonDto bazresiAzmon)
+        public async Task<ResponseDto> AddAsync(BazresiDto bazresi)
         {
-            if (bazresiAzmon == null)
+            if (bazresi == null)
             {
                 var error = new ResponseDto
                 {
@@ -33,7 +31,7 @@ namespace BazresiApi.Services
             }
             else
             {
-                var adminMapped = _mapper.Map<T_Bazresi_Azmon>(bazresiAzmon);
+                var adminMapped = _mapper.Map<T_Bazres>(bazresi);
                 _context.Add(adminMapped);
                 await _context.SaveChangesAsync();
 
@@ -53,8 +51,8 @@ namespace BazresiApi.Services
 
         public async Task<ResponseDto> GetAsync(long id)
         {
-            var bazresiAzmon = await _context.BazresiAzmon.Where(c => c.T_AdminsBackups_ID == id).ToListAsync();
-            if (bazresiAzmon.Any())
+            var bazresi = await _context.Bazres.Where(c => c.T_AdminsBackups_ID == id).ToListAsync();
+            if (bazresi.Any())
             {
 
                 var success = new ResponseDto
@@ -62,7 +60,7 @@ namespace BazresiApi.Services
                     Message = "Books successfully retrieved .",
                     IsSuccess = true,
                     Status = HttpStatusCode.OK.ToString(),
-                    Data = new { response = _mapper.Map<IEnumerable<BazresiAzmonDto>>(bazresiAzmon) }
+                    Data = new { response = _mapper.Map<IEnumerable<BazresiDto>>(bazresi) }
                 };
                 return success;
             }

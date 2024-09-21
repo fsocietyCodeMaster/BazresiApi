@@ -7,10 +7,7 @@ namespace BazresiApi.DTO
 
         public int? T_Bazresi_Azmon_Id { get; set; }
 
-        [StringLength(500)]
-        public string Name_Pic { get; set; }
-
-        public string Route_Pic { get; set; }
+        public string Base64data { get; set; }
 
         public int? Is_Temp { get; set; }
 

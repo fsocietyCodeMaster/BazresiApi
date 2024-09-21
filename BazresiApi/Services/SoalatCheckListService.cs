@@ -1,30 +1,80 @@
-﻿using BazresiApi.Context;
+﻿using AutoMapper;
+using BazresiApi.Context;
+using BazresiApi.DTO;
 using BazresiApi.Models;
 using BazresiApi.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace BazresiApi.Services
 {
-    public class SoalatCheckListService : IGenericRepository<T_Soalat_CheckList>
+    public class SoalatCheckListService : IGenericRepository<SoalatCheckListDto>
     {
         private readonly BazresiDb _context;
-
-        public SoalatCheckListService(BazresiDb context)
+        private readonly IMapper _mapper;
+        public SoalatCheckListService(BazresiDb context, IMapper mapper)
         {
             _context = context;
-        }
-        public void add(T_Soalat_CheckList soalatCheckList)
-        {
-            _context.SoalatCheckList.Add(soalatCheckList);
-            
-
+            _mapper = mapper;
         }
 
-
-
-        public async Task<IEnumerable<T_Soalat_CheckList>> GetAsync(long id)
+        public async Task<ResponseDto> AddAsync(SoalatCheckListDto soalatCheckList)
         {
-            return await _context.SoalatCheckList.Where(u => u.T_AdminsBackups_ID == id).ToListAsync();
+            if (soalatCheckList == null)
+            {
+                var error = new ResponseDto
+                {
+                    Message = "Something is wrong.",
+                    IsSuccess = false,
+                    Status = HttpStatusCode.BadRequest.ToString(),
+                };
+                return error;
+            }
+            else
+            {
+                var adminMapped = _mapper.Map<T_Soalat_CheckList>(soalatCheckList);
+                _context.Add(adminMapped);
+                await _context.SaveChangesAsync();
+
+                var success = new ResponseDto
+                {
+                    Message = "successfully added.",
+                    IsSuccess = true,
+                    Status = HttpStatusCode.OK.ToString(),
+                };
+                return success;
+            }
+
+
+        }
+
+
+
+        public async Task<ResponseDto> GetAsync(long id)
+        {
+            var soalatCheckList = await _context.SoalatCheckList.Where(c => c.T_AdminsBackups_ID == id).ToListAsync();
+            if (soalatCheckList.Any())
+            {
+
+                var success = new ResponseDto
+                {
+                    Message = "Books successfully retrieved .",
+                    IsSuccess = true,
+                    Status = HttpStatusCode.OK.ToString(),
+                    Data = new { response = _mapper.Map<IEnumerable<SoalatCheckListDto>>(soalatCheckList) }
+                };
+                return success;
+            }
+            else
+            {
+                var error = new ResponseDto
+                {
+                    Message = "Nothing found.",
+                    IsSuccess = false,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                };
+                return error;
+            }
         }
 
         public async Task SaveAsync()
